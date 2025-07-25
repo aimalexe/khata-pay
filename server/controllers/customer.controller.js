@@ -26,6 +26,15 @@ exports.createCustomer = asyncWrapper(async (req, res) => {
     runningBalance,
   });
 
+  // Create an opening balance transaction if runningBalance > 0
+  if (runningBalance > 0) {
+    await Transaction.create({
+      fk_customer_id: customer.id,
+      cashIn: runningBalance,
+      cashOut: 0,
+    });
+  }
+
 
   return res.status(201).json({
     message: 'Customer created successfully.',

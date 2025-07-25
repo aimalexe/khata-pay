@@ -22,3 +22,14 @@ body {
 button{
   font-weight: bold;
 }
+
+.transaction-slider {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.1s cubic-bezier(0.6,0,0.2,1), opacity 0.4s;
+}
+.transaction-slider.open {
+  max-height: 5000px; 
+  opacity: 50;
+}

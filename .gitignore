@@ -27,3 +27,5 @@ Thumbs.db
 
 # Optional: Ignore database files if used locally
 *.sqlite
+
+node_modules/

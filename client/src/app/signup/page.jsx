@@ -1,27 +1,29 @@
 "use client";
-import { useState,useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import Link from "next/link";
 import * as Yup from "yup";
 import { signupUser } from "@/services/signupHandling.services.js";
-import {useRouter} from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { notifications } from "@mantine/notifications";
-import {TextInput,PasswordInput,Button,Title,Container,Text,Stack,Paper,} from "@mantine/core";
+import KhataPayIcon from '@/assets/images/khata-pay-icon.png'
 import {
- 
-  IconCheck,
-  IconEye,
-  IconEyeOff,
-} from "@tabler/icons-react";
-
-
+  TextInput,
+  PasswordInput,
+  Title,
+  Container,
+  Text,
+  Stack,
+  Paper,
+} from "@mantine/core";
+import { IconCheck, IconEye, IconEyeOff } from "@tabler/icons-react";
 
 export default function Login({ onBack }) {
   const [loading, setLoading] = useState(false);
   const hasShown = useRef(false);
   const router = useRouter();
-  
- useEffect(() => {
+
+  useEffect(() => {
     if (!hasShown.current) {
       notifications.show({
         title: "Welcome message",
@@ -31,7 +33,6 @@ export default function Login({ onBack }) {
       hasShown.current = true;
     }
   }, []);
-  
 
   const formik = useFormik({
     initialValues: {
@@ -45,35 +46,34 @@ export default function Login({ onBack }) {
       password: Yup.string()
         .min(6, "password must be atleast 6 characters")
         .required("Password is required"),
-      phone_number: Yup.string().min(11,"Phone number must not be less than 11 digits").required("Phone Number is required"),
+      phone_number: Yup.string()
+        .min(11, "Phone number must not be less than 11 digits")
+        .required("Phone Number is required"),
     }),
 
     onSubmit: async (values) => {
       setLoading(true);
-      
-         try {
-          await signupUser(values); 
-      
-          notifications.show({
-            title: "Signup Successful",
-            message: "Redirecting to Your Dashboard",
-            color: "green",
-          });
-      
-          router.push("/user-dashboard"); 
-      
-        } catch (error) {
-          setErrorMsg(error.message || "Signup failed");
-          notifications.show({
-            title: "Signup Failed",
-            message: error.message || "Please try again.",
-            color: "red",
-          });
-        } finally {
-          setLoading(false);
-        }
-     
 
+      try {
+        await signupUser(values);
+
+        notifications.show({
+          title: "Signup Successful",
+          message: "Redirecting to Your Dashboard",
+          color: "green",
+        });
+
+        router.push("/user-dashboard");
+      } catch (error) {
+        setErrorMsg(error.message || "Signup failed");
+        notifications.show({
+          title: "Signup Failed",
+          message: error.message || "Please try again.",
+          color: "red",
+        });
+      } finally {
+        setLoading(false);
+      }
     },
   });
 
@@ -81,11 +81,14 @@ export default function Login({ onBack }) {
     <div className="min-h-screen bg-white ">
       <Container size={800} className="w-full">
         <div className="min-h-screen flex flex-col lg:flex-row lg:grid lg:grid-cols-2 gap-12 items-center justify-center">
+
           {/* Signup information */}
           <div className="hidden lg:flex flex-col justify-center items-start text-[#0a4a1f] space-y-8 h-full px-8">
             <div className="space-y-2">
-              <h1 className="text-4xl  text-[#0a6b1f] "
-              style={{fontFamily:"Harabara"}}>
+              <h1
+                className="text-4xl  text-[#0a6b1f] "
+                style={{ fontFamily: "Harabara" }}
+              >
                 Start your journey with Khata Pay
               </h1>
               <p className="text-sm text-black leading-relaxed">
@@ -99,7 +102,7 @@ export default function Login({ onBack }) {
                 <div className="w-6 h-6 bg-[#076a25] rounded-full flex items-center justify-center mt-1">
                   <IconCheck size={15} className="text-white" />
                 </div>
-                
+
                 <div>
                   <h3 className="font-semibold text-sm">
                     Trusted by 10,000+ Businesses
@@ -151,9 +154,11 @@ export default function Login({ onBack }) {
                 boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
                 border: "none",
               }}
+
             >
-              
+              {/* logo and title */}
               <div className="text-center mb-3">
+              <img src={KhataPayIcon.src} alt="Khata Pay Icon" className="w-10 h-10 mx-auto" />
                 <Title
                   order={2}
                   className=" text-[#0a4a1f] font-semibold text-xs"
@@ -162,11 +167,9 @@ export default function Login({ onBack }) {
                 </Title>
               </div>
 
-             
-
               <form onSubmit={formik.handleSubmit}>
                 <Stack gap="lg">
-                  {/* Username */}
+                  
                   <div>
                     <Text size="xs" className="!text-[#0a4a1f] font-medium">
                       Username
@@ -193,10 +196,9 @@ export default function Login({ onBack }) {
                               color: "black",
                             },
                           },
-                          error:{
-                             fontSize: "12px"
-                          }
-                         
+                          error: {
+                            fontSize: "12px",
+                          },
                         }}
                       />
                       {formik.values.name && !formik.errors.name && (
@@ -208,7 +210,6 @@ export default function Login({ onBack }) {
                     </div>
                   </div>
 
-                  {/* Phone Number */}
                   <div>
                     <div className="flex justify-between items-center mb-2">
                       <Text size="xs" className="!text-[#0a4a1f] font-medium">
@@ -219,7 +220,10 @@ export default function Login({ onBack }) {
                       placeholder="Enter your phone number"
                       size="sm"
                       {...formik.getFieldProps("phone_number")}
-                        error={formik.touched.phone_number && formik.errors.phone_number}
+                      error={
+                        formik.touched.phone_number &&
+                        formik.errors.phone_number
+                      }
                       styles={{
                         input: {
                           backgroundColor: "white",
@@ -238,15 +242,13 @@ export default function Login({ onBack }) {
                             color: "#6b7280",
                           },
                         },
-                        error:{
-                             fontSize: "12px"
-                          }
-                       
+                        error: {
+                          fontSize: "12px",
+                        },
                       }}
                     />
                   </div>
 
-                  {/* Password */}
                   <div>
                     <div className="flex justify-between items-center mb-2">
                       <Text size="xs" className="!text-[#0a4a1f] font-medium">
@@ -292,15 +294,14 @@ export default function Login({ onBack }) {
                             color: "#00521b",
                           },
                         },
-                        error:{
-                             fontSize: "12px"
-                          }
+                        error: {
+                          fontSize: "12px",
+                        },
                       }}
                       error={formik.touched.password && formik.errors.password}
                     />
                   </div>
 
-                  {/* signin Button */}
                   <button
                     type="submit"
                     disabled={loading}
@@ -311,7 +312,6 @@ export default function Login({ onBack }) {
                 </Stack>
               </form>
 
-            
               <div className="text-center mt-3 space-y-2">
                 <Text size="xs" className="text-black">
                   <span className="text-black">Already have an account? </span>

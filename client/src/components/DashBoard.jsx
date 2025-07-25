@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import AccountPng from '@/assets/images/account.png'
+import AccountPng from "@/assets/images/account.png";
 import Link from "next/link";
 
 import {
@@ -16,7 +16,6 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import {
   IconLogout,
-  IconUser,
   IconBell,
   IconChevronDown,
 } from "@tabler/icons-react";
@@ -29,7 +28,7 @@ export default function Dashboard() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-     const storedUser = localStorage.getItem("user"); 
+    const storedUser = localStorage.getItem("user");
     try {
       if (storedUser && storedUser !== "undefined") {
         setUser(JSON.parse(storedUser));
@@ -37,11 +36,9 @@ export default function Dashboard() {
       }
     } catch (e) {
       console.error("Failed to parse user JSON:", e);
-      localStorage.removeItem("user"); 
+      localStorage.removeItem("user");
     }
   }, []);
-
-
 
   return (
     <AppShell
@@ -50,7 +47,7 @@ export default function Dashboard() {
       padding="md"
       className="bg-white"
     >
-      {/* Header */}
+  
       <AppShell.Header>
         <Group h="100%" px="xl" justify="space-between">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
@@ -66,11 +63,7 @@ export default function Dashboard() {
             <Menu shadow="xl" width={200} position="bottom-end">
               <Menu.Target>
                 <UnstyledButton className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-500 transition-colors">
-                  <Avatar
-                    src={AccountPng.src}
-                    size={32}
-                    radius="xl"
-                  />
+                  <Avatar src={AccountPng.src} size={32} radius="xl" />
                   <div className="text-left hidden sm:block">
                     <Text size="sm" fw={500}>
                       {user?.name || "Guest"}
@@ -82,7 +75,7 @@ export default function Dashboard() {
 
               <Menu.Dropdown>
                 <Menu.Label>More</Menu.Label>
-                
+
                 <Menu.Item
                   color="red"
                   leftSection={
@@ -97,7 +90,7 @@ export default function Dashboard() {
         </Group>
       </AppShell.Header>
 
-      {/* Sidebar */}
+    
       <AppShell.Navbar p="md" className="bg-white border-r border-gray-200">
         <Sidebar
           activeSection={activeSection}
@@ -105,7 +98,7 @@ export default function Dashboard() {
         />
       </AppShell.Navbar>
 
-      {/* Main Content */}
+      
       <AppShell.Main className="bg-white">
         <DashboardContent activeSection={activeSection} />
       </AppShell.Main>

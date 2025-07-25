@@ -40,9 +40,13 @@ const Customer = sequelize.define('Customer',{
 );
 
 Customer.beforeCreate(function(customer){
-    const unixDate = formatISO(new Date());
-    customer.createdAt = unixDate;
-    customer.updatedAt = unixDate;
+    const now = formatISO(new Date());
+    customer.createdAt = now;
+    customer.updatedAt = now;
+});
+
+Customer.beforeUpdate(function(customer){
+    customer.updatedAt = formatISO(new Date());
 });
 
 Customer.associate = (models) => {

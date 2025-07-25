@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { loginUser } from "@/services/loginHandling.services.js";
 import { notifications } from "@mantine/notifications";
 import { useRouter } from "next/navigation";
+import KhataPayIcon from '@/assets/images/khata-pay-icon.png'
 
 import {
   TextInput,
@@ -31,6 +32,7 @@ export default function Login() {
         title: "Welcome message",
         message: "Welcome to Khata Pay Login!",
         color: "green",
+      
       });
       hasShown.current = true;
     }
@@ -105,13 +107,13 @@ export default function Login() {
                 border: "none",
               }}
             >
-              {/* Header */}
+              {/* logo and title */}
               <div className="text-center mb-3">
+                <img src={KhataPayIcon.src} alt="Khata Pay Icon" className="w-10 h-10 mx-auto" />
                 <Title order={2} className=" text-[#0a4a1f] font-semibold">
                   Log In
                 </Title>
               </div>
-
               {errorMsg && (
                 <Text
                   size="sm"
@@ -219,7 +221,7 @@ export default function Login() {
                     </div>
                   </div>
 
-                  {/* Login Button */}
+                  
                   <button
                     type="submit"
                     disabled={loading}

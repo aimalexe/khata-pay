@@ -1,4 +1,4 @@
-const { getUnixTime} = require ('date-fns');
+const { getUnixTime, formatISO } = require ('date-fns');
 module.exports = (sequelize,DataTypes)=>{
 
 const Transaction = sequelize.define('Transaction',{
@@ -37,10 +37,14 @@ const Transaction = sequelize.define('Transaction',{
 );
 
 Transaction.beforeCreate(function(transaction){
-    const unixDate = getUnixTime(new Date());
-    transaction.createdAt = unixDate;
-    transaction.updatedAt = unixDate;
+    const now = formatISO(new Date());
+    transaction.createdAt = now;
+    transaction.updatedAt = now;
 })
+
+Transaction.beforeUpdate(function(transaction){
+    transaction.updatedAt = formatISO(new Date());
+});
 
 Transaction.associate = (models)=>{ 
     Transaction.belongsTo (models.Customer,{

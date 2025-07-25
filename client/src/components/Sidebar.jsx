@@ -12,8 +12,8 @@ import {
 
 const navigationItems = [
   { id: "customers", label: "Customers", icon: IconUsers },
+  { id: "Transaction", label: "Transactions History", icon: IconWallet },
   { id: "analytics", label: "Analytics", icon: IconChartBar },
-  { id: "Transaction", label: "Transactions", icon: IconWallet },
   { id: "profile", label: "Profile", icon: IconUserCircle },
 ];
 
